@@ -9,7 +9,7 @@ data class PostListUi(
     val body: String
 )
 
-fun PostListDto.toUi(): PostListUi {
+fun PostListDto.toPostListUi(): PostListUi {
     return PostListUi(
         userId = userId,
         id = id,

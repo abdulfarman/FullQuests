@@ -62,8 +62,8 @@ fun PostListView(state: PostUiState, modifier: Modifier = Modifier) {
 
             else -> {
                 LazyColumn {
-                    items(state.products.size) { product ->
-                        PostItem(state.products[product])
+                    items(state.post.size) { product ->
+                        PostItem(state.post[product])
                     }
                 }
             }
@@ -99,7 +99,7 @@ fun PostListViewPreview() {
     QuestsTheme {
         PostListView(
             state = PostUiState(
-                products = sampleProducts, isLoading = false, error = null
+                post = sampleProducts, isLoading = false, error = null
             )
         )
     }
@@ -123,7 +123,7 @@ fun PostListViewErrorPreview() {
     QuestsTheme {
         PostListView(
             state = PostUiState(
-                products = emptyList(), isLoading = false, error = "Failed to load posts"
+                post = emptyList(), isLoading = false, error = "Failed to load posts"
             )
         )
     }

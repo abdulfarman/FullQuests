@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.example.quests.ui.screen.post.PostDetailScreen
 import com.example.quests.ui.screen.post.PostListScreen
 import com.example.quests.ui.theme.QuestsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             QuestsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PostListScreen(modifier = Modifier.padding(innerPadding))
+                    PostDetailScreen(id = 1 ,modifier = Modifier.padding(innerPadding))
                 }
             }
         }

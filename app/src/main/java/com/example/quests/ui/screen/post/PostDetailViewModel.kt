@@ -6,31 +6,30 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.quests.data.model.PostDetailDto
-import com.example.quests.domain.usecase.FetchPostListUseCase
+import com.example.quests.di.IoDispatcher
+import com.example.quests.domain.model.PostDetailUi
+import com.example.quests.domain.usecase.FetchPostByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-    private val fetchPostListUseCase: FetchPostListUseCase
+    private val fetchPostByIdUseCase: FetchPostByIdUseCase,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val TAG = "PostDetailViewModel"
-    var state by mutableStateOf(PostUiState())
+    var state by mutableStateOf(PostDetailUiState())
         private set
 
-    init {
-        loadPosts()
-    }
-
-    fun loadPosts() {
-        viewModelScope.launch {
+    fun loadPost(id: Int) {
+        viewModelScope.launch(ioDispatcher) {
             state = state.copy(isLoading = true)
             try {
-                val products = fetchPostListUseCase()
-                state = state.copy(products = products, isLoading = false)
+                val post = fetchPostByIdUseCase(id = id)
+                state = state.copy(post = post, isLoading = false)
             } catch (e: Exception) {
                 state = state.copy(error = "Error in Fetching Posts", isLoading = false)
                 Log.e(TAG, "Error loading posts: ${e.message}", e)
@@ -40,7 +39,7 @@ class PostDetailViewModel @Inject constructor(
 }
 
 data class PostDetailUiState(
-    val products: List<PostDetailDto> = emptyList(),
+    val post: PostDetailUi? = null,
     val isLoading: Boolean = false,
     val error: String? = null
 )

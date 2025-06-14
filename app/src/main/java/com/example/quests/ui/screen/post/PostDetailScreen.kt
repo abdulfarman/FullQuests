@@ -9,17 +9,22 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.quests.domain.model.PostListUi
+import com.example.quests.domain.model.PostDetailUi
 import com.example.quests.ui.theme.QuestsTheme
 
 
 @Composable
-fun PostDetailScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier) {
+fun PostDetailScreen(id: Int, viewModel: PostDetailViewModel = hiltViewModel(), modifier: Modifier) {
+    LaunchedEffect(Unit) {
+        viewModel.loadPost(id)
+    }
+
     val state = viewModel.state
     PostDetailView(
         state = state, modifier = modifier
@@ -28,7 +33,7 @@ fun PostDetailScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: M
 
 
 @Composable
-fun PostDetailView(state: PostUiState, modifier: Modifier = Modifier) {
+fun PostDetailView(state: PostDetailUiState, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier, contentAlignment = Alignment.Center
     ) {
@@ -53,9 +58,17 @@ fun PostDetailView(state: PostUiState, modifier: Modifier = Modifier) {
             }
 
             else -> {
-                //Todo
+                PostDetailContent(post = state.post)
             }
         }
+    }
+}
+
+@Composable
+fun PostDetailContent(post: PostDetailUi?) {
+    Column {
+        Text(text = post?.title ?: "")
+        Text(text = post?.body ?: "")
     }
 }
 
@@ -63,16 +76,16 @@ fun PostDetailView(state: PostUiState, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PostDetailScreenViewPreview() {
-    val sampleProducts = List(10) { index ->
-        PostListUi(
-            userId = index + 1, id = index + 1, title = "Sample Product $index", body = "This is a sample product description for product $index."
+    val sampleProduct =
+        PostDetailUi(
+            userId = 1, id = 1, title = "Sample Product ", body = "This is a sample product description for product."
         )
-    }
+
 
     QuestsTheme {
         PostDetailView(
-            state = PostUiState(
-                products = sampleProducts, isLoading = false, error = null
+            state = PostDetailUiState(
+                post = sampleProduct, isLoading = false, error = null
             )
         )
     }
@@ -85,8 +98,8 @@ fun PostDetailScreenViewPreview() {
 fun PostDetailViewErrorPreview() {
     QuestsTheme {
         PostDetailView(
-            state = PostUiState(
-                products = emptyList(), isLoading = false, error = "Failed to load post"
+            state = PostDetailUiState(
+                post = null, isLoading = false, error = "Failed to load post"
             )
         )
     }

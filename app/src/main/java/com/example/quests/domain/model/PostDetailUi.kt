@@ -9,7 +9,7 @@ data class PostDetailUi(
     val body: String
 )
 
-fun PostDetailDto.toUi(): PostDetailUi {
+fun PostDetailDto.toPostDetailUi(): PostDetailUi {
     return PostDetailUi(
         userId = userId,
         id = id,
