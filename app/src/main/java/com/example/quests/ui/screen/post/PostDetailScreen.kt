@@ -15,14 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.quests.domain.model.PostDetailUi
 import com.example.quests.ui.theme.QuestsTheme
 
 
 @Composable
-fun PostDetailScreen(id: Int, viewModel: PostDetailViewModel = hiltViewModel(), modifier: Modifier) {
+fun PostDetailScreen(
+    postId: Int, navController: NavHostController,
+    viewModel: PostDetailViewModel = hiltViewModel(), modifier: Modifier = Modifier
+) {
     LaunchedEffect(Unit) {
-        viewModel.loadPost(id)
+        viewModel.loadPost(postId)
     }
 
     val state = viewModel.state

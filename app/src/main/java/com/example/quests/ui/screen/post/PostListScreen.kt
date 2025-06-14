@@ -1,5 +1,6 @@
 package com.example.quests.ui.screen.post
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,21 +23,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.quests.domain.model.PostListUi
+import com.example.quests.ui.navigation.ScreenRoutes
 import com.example.quests.ui.theme.QuestsTheme
 
 
 @Composable
-fun PostListScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier) {
+fun PostListScreen(
+    navController: NavHostController,
+    viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier = Modifier
+) {
     val state = viewModel.state
     PostListView(
-        state = state, modifier = modifier
+        state = state, modifier = modifier,
+        navToDetail= { postId ->
+            navController.navigate(
+                ScreenRoutes.PostDetailRoute.createRoute(postId.toString())
+            )
+        }
     )
 }
 
 
 @Composable
-fun PostListView(state: PostUiState, modifier: Modifier = Modifier) {
+fun PostListView(state: PostUiState, modifier: Modifier = Modifier,
+                 navToDetail: (Int) -> Unit
+) {
     Box(
         modifier = modifier, contentAlignment = Alignment.Center
     ) {
@@ -63,7 +76,7 @@ fun PostListView(state: PostUiState, modifier: Modifier = Modifier) {
             else -> {
                 LazyColumn {
                     items(state.post.size) { product ->
-                        PostItem(state.post[product])
+                        PostItem(state.post[product], navToDetail = navToDetail)
                     }
                 }
             }
@@ -72,11 +85,18 @@ fun PostListView(state: PostUiState, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PostItem(product: PostListUi) {
+fun PostItem(
+    product: PostListUi,
+    navToDetail: (Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(), elevation = CardDefaults.cardElevation()
+
+            .fillMaxWidth()
+            .clickable(true) {
+                navToDetail(product.id ?: 0)
+            }, elevation = CardDefaults.cardElevation()
     ) {
         Row(Modifier.padding(16.dp)) {
             Column {
@@ -101,7 +121,7 @@ fun PostListViewPreview() {
             state = PostUiState(
                 post = sampleProducts, isLoading = false, error = null
             )
-        )
+        ){}
     }
 
 }
@@ -113,7 +133,7 @@ fun PostItemPreview() {
         userId = 1, id = 1, title = "Sample Product", body = "This is a sample product description."
     )
     QuestsTheme {
-        PostItem(sampleProduct)
+        PostItem(sampleProduct){}
     }
 }
 
@@ -125,6 +145,6 @@ fun PostListViewErrorPreview() {
             state = PostUiState(
                 post = emptyList(), isLoading = false, error = "Failed to load posts"
             )
-        )
+        ){}
     }
 }
