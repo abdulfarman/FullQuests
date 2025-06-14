@@ -1,4 +1,4 @@
-package com.example.quests.ui.screen.products
+package com.example.quests.ui.screen.post
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,16 +27,16 @@ import com.example.quests.ui.theme.QuestsTheme
 
 
 @Composable
-fun ProductScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier) {
+fun PostListScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier) {
     val state = viewModel.state
-    ProductScreenView(
+    PostListView(
         state = state, modifier = modifier
     )
 }
 
 
 @Composable
-fun ProductScreenView(state: ProductUiState, modifier: Modifier = Modifier) {
+fun PostListView(state: PostUiState, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier, contentAlignment = Alignment.Center
     ) {
@@ -63,7 +63,7 @@ fun ProductScreenView(state: ProductUiState, modifier: Modifier = Modifier) {
             else -> {
                 LazyColumn {
                     items(state.products.size) { product ->
-                        ProductItem(state.products[product])
+                        PostItem(state.products[product])
                     }
                 }
             }
@@ -72,7 +72,7 @@ fun ProductScreenView(state: ProductUiState, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ProductItem(product: PostListUi) {
+fun PostItem(product: PostListUi) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -89,7 +89,7 @@ fun ProductItem(product: PostListUi) {
 
 @Preview(showBackground = true)
 @Composable
-fun ProductScreenViewPreview() {
+fun PostListViewPreview() {
     val sampleProducts = List(10) { index ->
         PostListUi(
             userId = index + 1, id = index + 1, title = "Sample Product $index", body = "This is a sample product description for product $index."
@@ -97,8 +97,8 @@ fun ProductScreenViewPreview() {
     }
 
     QuestsTheme {
-        ProductScreenView(
-            state = ProductUiState(
+        PostListView(
+            state = PostUiState(
                 products = sampleProducts, isLoading = false, error = null
             )
         )
@@ -108,21 +108,21 @@ fun ProductScreenViewPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ProductItemPreview() {
+fun PostItemPreview() {
     val sampleProduct = PostListUi(
         userId = 1, id = 1, title = "Sample Product", body = "This is a sample product description."
     )
     QuestsTheme {
-        ProductItem(sampleProduct)
+        PostItem(sampleProduct)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun ProductItemErrorPreview() {
+fun PostListViewErrorPreview() {
     QuestsTheme {
-        ProductScreenView(
-            state = ProductUiState(
+        PostListView(
+            state = PostUiState(
                 products = emptyList(), isLoading = false, error = "Failed to load posts"
             )
         )

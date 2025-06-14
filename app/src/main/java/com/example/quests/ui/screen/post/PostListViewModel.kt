@@ -1,4 +1,4 @@
-package com.example.quests.ui.screen.products
+package com.example.quests.ui.screen.post
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -18,7 +18,7 @@ class PostListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val TAG = "PostListViewModel"
-    var state by mutableStateOf(ProductUiState())
+    var state by mutableStateOf(PostUiState())
         private set
 
     init {
@@ -39,7 +39,7 @@ class PostListViewModel @Inject constructor(
     }
 }
 
-data class ProductUiState(
+data class PostUiState(
     val products: List<PostListUi> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
