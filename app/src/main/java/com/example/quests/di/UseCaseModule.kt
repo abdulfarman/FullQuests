@@ -1,7 +1,7 @@
 package com.example.quests.di
 
-import com.example.quests.domain.repository.ProductRepository
-import com.example.quests.domain.usecase.GetProductsUseCase
+import com.example.quests.domain.repository.PostRepository
+import com.example.quests.domain.usecase.FetchPostListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 object UseCaseModule {
 
     @Provides
-    fun provideGetProductsUseCase(
-        repository: ProductRepository
-    ): GetProductsUseCase = GetProductsUseCase(repository)
+    fun provideFetchPostListUseCase(
+        repository: PostRepository
+    ): FetchPostListUseCase = FetchPostListUseCase(repository)
 }

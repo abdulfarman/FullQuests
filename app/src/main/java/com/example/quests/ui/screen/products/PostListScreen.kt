@@ -18,11 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.quests.domain.model.ProductUi
+import com.example.quests.domain.model.PostListUi
 
 
 @Composable
-fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(), modifier: Modifier) {
+fun ProductScreen(viewModel: PostListViewModel = hiltViewModel(), modifier: Modifier) {
     val state = viewModel.state
     Box(
         modifier = modifier,
@@ -53,7 +53,7 @@ fun ProductScreen(viewModel: ProductViewModel = hiltViewModel(), modifier: Modif
 }
 
 @Composable
-fun ProductItem(product: ProductUi) {
+fun ProductItem(product: PostListUi) {
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -63,7 +63,7 @@ fun ProductItem(product: ProductUi) {
         Row(Modifier.padding(16.dp)) {
             Column {
                 Text(product.title, fontWeight = FontWeight.Bold)
-                Text("₹${product.description}", color = Color.Gray)
+                Text("₹${product.body}", color = Color.Gray)
             }
         }
     }

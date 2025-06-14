@@ -9,6 +9,7 @@ activityCompose = "1.10.1"
 composeBom = "2025.05.00"
 hilt = "2.52"
 retrofit = "2.11.0"
+okhttp = "4.12.0"
 lifecycle = "2.9.0"
 compose = "1.8.1"
 navigation-compose = "2.9.0"
@@ -35,6 +36,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" } # Added logging interceptor library
 
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }

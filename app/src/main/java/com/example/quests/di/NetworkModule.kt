@@ -1,11 +1,12 @@
 package com.example.quests.di
 
-import com.example.quests.data.remote.ProductApi
+import com.example.quests.data.remote.PostApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -15,11 +16,15 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl() = "https://dummyjson.com/"
+    fun provideBaseUrl() = "https://jsonplaceholder.typicode.com/"
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+    fun provideOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+    }
 
     @Provides
     @Singleton
@@ -32,6 +37,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideProductApi(retrofit: Retrofit): ProductApi =
-        retrofit.create(ProductApi::class.java)
+    fun providePostApi(retrofit: Retrofit): PostApi = retrofit.create(PostApi::class.java)
 }

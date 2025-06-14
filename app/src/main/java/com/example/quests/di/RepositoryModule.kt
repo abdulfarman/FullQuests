@@ -1,8 +1,8 @@
 package com.example.quests.di
 
-import com.example.quests.data.remote.ProductApi
-import com.example.quests.data.repository.ProductRepositoryImpl
-import com.example.quests.domain.repository.ProductRepository
+import com.example.quests.data.remote.PostApi
+import com.example.quests.data.repository.PostRepositoryImpl
+import com.example.quests.domain.repository.PostRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ object RepositoryProvider {
 
     @Provides
     @Singleton
-    fun provideProductRepository(
-        api: ProductApi
-    ): ProductRepository = ProductRepositoryImpl(api)
+    fun providePostRepository(
+        api: PostApi
+    ): PostRepository = PostRepositoryImpl(api)
 }
