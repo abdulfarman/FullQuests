@@ -1,6 +1,5 @@
 package com.example.quests.ui.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -12,7 +11,7 @@ import com.example.quests.ui.screen.post.PostDetailScreen
 import com.example.quests.ui.screen.post.PostListScreen
 
 @Composable
-fun AppNavigation(innerPadding: PaddingValues) {
+fun AppMainScreen() {
     val navController: NavHostController = rememberNavController()
 
     NavHost(

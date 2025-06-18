@@ -32,8 +32,8 @@ class PostListViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             state = state.copy(isLoading = true)
             try {
-                val products = fetchPostListUseCase()
-                state = state.copy(post = products, isLoading = false)
+                val posts = fetchPostListUseCase()
+                state = state.copy(post = posts, isLoading = false)
             } catch (e: Exception) {
                 state = state.copy(error = "Error in Fetching Posts", isLoading = false)
                 Log.e(TAG, "Error loading posts: ${e.message}", e)

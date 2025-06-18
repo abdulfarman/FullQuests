@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
-import com.example.quests.ui.navigation.AppNavigation
+import com.example.quests.ui.navigation.AppMainScreen
 import com.example.quests.ui.theme.QuestsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,9 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             QuestsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    AppNavigation(innerPadding = innerPadding)
-                }
+                    AppMainScreen()
             }
         }
     }
